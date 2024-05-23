@@ -3,15 +3,52 @@ package model
 import (
 	"crypto/md5"
 	"encoding/hex"
-
-	"github.com/LuizEduardo-service/go_crud/src/configuration/rest_err"
+	"encoding/json"
 )
 
 type userDomain struct {
-	Email    string
-	Password string
-	Name     string
-	Age      int8
+	ID       string
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+	Age      int8   `json:"age"`
+}
+
+func (ud *userDomain) GetJSONValue() (string, error) {
+	b, err := json.Marshal(ud)
+	if err != nil {
+		return "", err
+	}
+	return string(b), nil
+
+}
+
+func (ud *userDomain) SetID(id string) {
+	ud.ID = id
+}
+
+type UserDomainInterface interface {
+	GetEmail() string
+	GetPassaword() string
+	GetAge() int8
+	GetName() string
+
+	SetID(string)
+	GetJSONValue() (string, error)
+	EncryptPassword()
+}
+
+func (ud *userDomain) GetEmail() string {
+	return ud.Email
+}
+func (ud *userDomain) GetPassaword() string {
+	return ud.Password
+}
+func (ud *userDomain) GetName() string {
+	return ud.Name
+}
+func (ud *userDomain) GetAge() int8 {
+	return ud.Age
 }
 
 func NewUserDomain(
@@ -19,7 +56,7 @@ func NewUserDomain(
 	age int8,
 ) UserDomainInterface {
 	return &userDomain{
-		email, password, name, age,
+		"", email, password, name, age,
 	}
 }
 
@@ -28,11 +65,4 @@ func (ud *userDomain) EncryptPassword() {
 	defer hash.Reset()
 	hash.Write([]byte(ud.Password))
 	ud.Password = hex.EncodeToString((hash.Sum(nil)))
-}
-
-type UserDomainInterface interface {
-	CreateUser() *rest_err.RestErr
-	UpdateUser(string) *rest_err.RestErr
-	FindUser(string) *rest_err.RestErr
-	DeleteUser(string) *rest_err.RestErr
 }
