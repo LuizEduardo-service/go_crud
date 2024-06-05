@@ -10,6 +10,12 @@ import (
 func (ud *userDomainService) CreateUserServices(
 	userDomain model.UserDomainInterface,
 ) (model.UserDomainInterface, *rest_err.RestErr) {
+
+	user, _ := ud.FindUserByEmailServices(userDomain.GetEmail())
+
+	if user != nil {
+		return nil, rest_err.NewBadRequestError("Email já Existe!")
+	}
 	logger.Info("Criando Model createUser", zap.String("journey", "createUser"))
 	userDomain.EncryptPassword()
 
