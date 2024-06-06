@@ -35,6 +35,14 @@ func NewBadRequestError(message string) *RestErr {
 	}
 }
 
+func NewUnauthorizedError(message string) *RestErr {
+	return &RestErr{
+		Message: message,
+		Err:     "Unauthorized",
+		Code:    http.StatusUnauthorized,
+	}
+}
+
 func NewNotFoundError(message string) *RestErr {
 	return &RestErr{
 		Message: message,

@@ -37,7 +37,12 @@ type UserRepository interface {
 	FindUserByEmail(
 		email string,
 	) (model.UserDomainInterface, *rest_err.RestErr)
+
 	FindUserByID(
 		id string,
+	) (model.UserDomainInterface, *rest_err.RestErr)
+
+	FindUserByEmailAndPassword(
+		email, password string,
 	) (model.UserDomainInterface, *rest_err.RestErr)
 }

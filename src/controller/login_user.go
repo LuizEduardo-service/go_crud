@@ -12,18 +12,14 @@ import (
 	"go.uber.org/zap"
 )
 
-var (
-	UserDomainInterface model.UserDomainInterface
-)
+func (uc *userControllerInterface) LoginUser(c *gin.Context) {
+	logger.Info("Inciando login de Usuario", zap.String("journey", "userLogin"))
 
-func (uc *userControllerInterface) CreateUser(c *gin.Context) {
-	logger.Info("Inciando Criação de Usuario", zap.String("journey", "createUser"))
-
-	var userRequest request.UserRequest
+	var userRequest request.UserLogin
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
 		logger.Error("Erro validação usuario", err,
-			zap.String("journey", "createUser"))
+			zap.String("journey", "userLogin"))
 		restErr := validation.ValidateUserError(err)
 
 		c.JSON(restErr.Code, restErr)
@@ -31,19 +27,17 @@ func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 
 	}
 
-	domain := model.NewUserDomain(
+	domain := model.NewUserLoginDomain(
 		userRequest.Email,
 		userRequest.Password,
-		userRequest.Name,
-		userRequest.Age,
 	)
 
-	domainResult, err := uc.service.CreateUserServices(domain)
+	domainResult, token, err := uc.service.LoginUserServices(domain)
 	if err != nil {
 		c.JSON(err.Code, err)
 	}
 
-	logger.Info("Usuario Criado com sucesso", zap.String("journey", "createUser"))
-
+	logger.Info("Usuario logado com sucesso", zap.String("journey", "userLogin"))
+	c.Header("Authorization", token)
 	c.JSON(http.StatusOK, view.ConvertDomainToResponse(domainResult))
 }
