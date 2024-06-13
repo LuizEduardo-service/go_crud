@@ -22,11 +22,11 @@ func TestUserRepository_CreateUser(t *testing.T) {
 
 	//mock de dados
 	mtestDb := mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock))
-	defer mtestDb.Close()
+	// defer mtestDb.Close()
 
 	mtestDb.Run("testando_criacao_usuario", func(mt *mtest.T) {
 		mt.AddMockResponses(bson.D{
-			{Key: "Ok", Value: 1},
+			{Key: "ok", Value: 1},
 			{Key: "n", Value: 1},
 			{Key: "acknowledged", Value: true},
 		})
@@ -43,4 +43,21 @@ func TestUserRepository_CreateUser(t *testing.T) {
 		assert.EqualValues(t, userDomain.GetEmail(), "teste@gmail.com")
 
 	})
+
+	mtestDb.Run("testando_casos_de_erro", func(mt *mtest.T) {
+		mt.AddMockResponses(bson.D{
+			{Key: "ok", Value: 0},
+		})
+
+		databaseMock := mt.Client.Database(database_name)
+		repo := NewUserRepository(databaseMock)
+		domain := model.NewUserDomain(
+			"teste@gmail.com", "123456test", "luiz eduardo", 31,
+		)
+		userDomain, err := repo.CreateUser(domain)
+
+		assert.NotNil(t, err)
+		assert.Nil(t, userDomain)
+	})
+
 }
