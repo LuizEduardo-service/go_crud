@@ -18,15 +18,12 @@ func (ur *userRepository) DeleteUser(
 
 	collection := ur.databaseConnection.Collection(collection_name)
 
-	userIdHex, err := primitive.ObjectIDFromHex(userId)
-
-	if err != nil {
-		return rest_err.NewBadRequestError("erro na conversão do ID!")
-	}
+	userIdHex, _ := primitive.ObjectIDFromHex(userId)
 
 	filter := bson.D{{Key: "_id", Value: userIdHex}}
 
-	_, err = collection.DeleteOne(context.Background(), filter)
+	_, err := collection.DeleteOne(context.Background(), filter)
+
 	if err != nil {
 		return rest_err.NewInternalServerError(err.Error())
 	}

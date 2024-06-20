@@ -35,6 +35,7 @@ type UserRepository interface {
 	) *rest_err.RestErr
 
 	FindUserByEmail(
+
 		email string,
 	) (model.UserDomainInterface, *rest_err.RestErr)
 

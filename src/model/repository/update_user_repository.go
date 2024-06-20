@@ -23,16 +23,12 @@ func (ur *userRepository) UpdateUser(
 	collection := ur.databaseConnection.Collection(collection_name)
 
 	value := converter.ConvertDomainToEntity(userDomain)
-	userIdHex, err := primitive.ObjectIDFromHex(userId)
-
-	if err != nil {
-		return rest_err.NewBadRequestError("erro na conversão do ID!")
-	}
+	userIdHex, _ := primitive.ObjectIDFromHex(userId)
 
 	filter := bson.D{{Key: "_id", Value: userIdHex}}
-	update := bson.D{{Key: "%set", Value: value}}
+	update := bson.D{{Key: "$set", Value: value}}
 
-	_, err = collection.UpdateOne(context.Background(), filter, update)
+	_, err := collection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
 		return rest_err.NewInternalServerError(err.Error())
 	}
