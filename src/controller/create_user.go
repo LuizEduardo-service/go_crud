@@ -41,6 +41,7 @@ func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 	domainResult, err := uc.service.CreateUserServices(domain)
 	if err != nil {
 		c.JSON(err.Code, err)
+		return
 	}
 
 	logger.Info("Usuario Criado com sucesso", zap.String("journey", "createUser"))
