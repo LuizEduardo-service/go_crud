@@ -18,11 +18,13 @@ func (uc *userControllerInterface) DeleteUser(c *gin.Context) {
 	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
 		errRest := rest_err.NewBadRequestError("Valor incorreto")
 		c.JSON(errRest.Code, errRest)
+		return
 	}
 
 	err := uc.service.DeleteUser(userId)
 	if err != nil {
 		c.JSON(err.Code, err)
+		return
 	}
 
 	logger.Info("Usuario Deletado com sucesso", zap.String("journey", "deleteUser"))
