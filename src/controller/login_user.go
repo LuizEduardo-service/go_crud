@@ -35,6 +35,7 @@ func (uc *userControllerInterface) LoginUser(c *gin.Context) {
 	domainResult, token, err := uc.service.LoginUserServices(domain)
 	if err != nil {
 		c.JSON(err.Code, err)
+		return
 	}
 
 	logger.Info("Usuario logado com sucesso", zap.String("journey", "userLogin"))
