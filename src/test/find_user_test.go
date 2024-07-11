@@ -30,7 +30,7 @@ var (
 // criar testMain inicializador---------------------------
 func TestMain(m *testing.M) {
 	// setar variaveis de ambiente
-	err := os.Setenv("DATABASE_NAME", "users")
+	err := os.Setenv("DATABASE_NAME", "users_test")
 	if err != nil {
 		log.Fatalf("Erro ao setar variaveis de ambiente")
 		return
@@ -88,7 +88,7 @@ func TestFindUserByEmail(t *testing.T) {
 
 		// inserindo usuario
 		_, err := Database.
-			Collection("users").
+			Collection("users_test").
 			InsertOne(context.Background(), bson.M{"_id": id, "name": t.Name(), "email": "test@test.com"})
 		if err != nil {
 			t.Fatal(err)
@@ -146,7 +146,7 @@ func TestFindUserById(t *testing.T) {
 
 		// inserindo usuario
 		_, err := Database.
-			Collection("users").
+			Collection("users_test").
 			InsertOne(context.Background(), bson.M{"_id": id, "name": t.Name(), "email": "test@test.com"})
 		if err != nil {
 			t.Fatal(err)

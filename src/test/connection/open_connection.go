@@ -17,6 +17,7 @@ func OpenConnection() (database *mongo.Database, close func()) {
 	pool, err := dockertest.NewPool("")
 	if err != nil {
 		log.Fatalf("Could not construct pool: %s", err)
+		return
 	}
 
 	resource, err := pool.RunWithOptions(&dockertest.RunOptions{
@@ -26,6 +27,7 @@ func OpenConnection() (database *mongo.Database, close func()) {
 
 	if err != nil {
 		log.Fatalf("Erro ao abrir conexão: %s", err)
+		return
 	}
 
 	// criando conexão ------------------------------------------
@@ -34,11 +36,13 @@ func OpenConnection() (database *mongo.Database, close func()) {
 
 	if err != nil {
 		log.Println("Erro ao criar conexão")
+		return
 	}
 
 	err = client.Connect(context.Background())
 	if err != nil {
 		log.Println("Erro ao tentar conectar!")
+		return
 	}
 
 	database = client.Database(os.Getenv("DATABASE_NAME"))
