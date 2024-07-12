@@ -56,7 +56,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestFindUserByEmail(t *testing.T) {
-
+	Database, _ := connection.OpenConnection()
 	t.Run("quando_email_retorna_invalido", func(t *testing.T) {
 		// criar recorder
 		recorder := httptest.NewRecorder()

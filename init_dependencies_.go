@@ -7,7 +7,7 @@ package main
 // 	"go.mongodb.org/mongo-driver/mongo"
 // )
 
-// func initDependences(database *mongo.Database) controller.UserControllerInterface {
+// func initDependencies_(database *mongo.Database) controller.UserControllerInterface {
 // 	repo := repository.NewUserRepository(database)
 // 	service := service.NewUserDomainService(repo)
 // 	return controller.NewControllerInterface(service)

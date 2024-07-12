@@ -14,13 +14,14 @@ import (
 
 	"github.com/LuizEduardo-service/go_crud/src/controller/model/request"
 	"github.com/LuizEduardo-service/go_crud/src/model/repository/entity"
+	"github.com/LuizEduardo-service/go_crud/src/test/connection"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 func TestCreateUser(t *testing.T) {
-
+	Database, _ := connection.OpenConnection()
 	t.Run("quando_criar_email_retorna_existente", func(t *testing.T) {
 		recorder := httptest.NewRecorder()
 		ctx := GetTestGinContext(recorder)

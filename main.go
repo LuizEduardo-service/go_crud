@@ -15,7 +15,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func initDependences(database *mongo.Database) controller.UserControllerInterface {
+func initDependencies(database *mongo.Database) controller.UserControllerInterface {
 	repo := repository.NewUserRepository(database)
 	service := service.NewUserDomainService(repo)
 	return controller.NewControllerInterface(service)
@@ -37,7 +37,7 @@ func main() {
 
 	}
 
-	userController := initDependences(database)
+	userController := initDependencies(database)
 	router := gin.Default()
 	routes.InitRoutes(&router.RouterGroup, userController)
 

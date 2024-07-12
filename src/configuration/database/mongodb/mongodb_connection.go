@@ -34,31 +34,3 @@ func NewMongoDBConnection(
 
 	return client.Database(database_name), nil
 }
-
-// func InitConnection() {
-
-// 	// user := Usuario{
-// 	// 	Name: "Luiz Eduardo",
-// 	// 	Age:  31,
-// 	// }
-
-// 	// collection := client.Database("crudInit").Collection("teste")
-
-// 	// result, err := collection.InsertOne(context.Background(), user)
-// 	// if err != nil {
-// 	// 	panic(err)
-// 	// }
-
-// 	// fmt.Println(result)
-
-// 	// // consultando valores
-// 	// filter := bson.D{{"nome", user.Name}} // preparando filtro para consulta
-// 	// userResult := Usuario{}               // onde sera despejado o resultado com ponteiro
-
-// 	// errFind := collection.FindOne(context.Background(), filter).Decode(&userResult) // consulta
-// 	// if errFind != nil {
-// 	// 	panic(errFind)
-// 	// }
-
-// 	// fmt.Println(userResult)
-// }
