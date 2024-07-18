@@ -12,6 +12,18 @@ import (
 	"go.uber.org/zap"
 )
 
+// FindUserByID retrieves user information based on the provided user ID.
+// @Summary Find User by ID
+// @Description Retrieves user details based on the user ID provided as a parameter.
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param userId path string true "ID of the user to be retrieved"
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+
+// @Failure 400 {object} rest_err.RestErr "Error: Invalid user ID"
+// @Failure 404 {object} rest_err.RestErr "User not found"
+// @Router /getUserById/{userId} [get]
 func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
 	logger.Info("Iniciando Pesquisa por ID", zap.String("journey", "findUserByID"))
 

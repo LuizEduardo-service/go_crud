@@ -23,6 +23,7 @@ func (ur *userRepository) FindUserByEmail(
 		zap.String("journey", "findUserByEmail"))
 
 	collection_name := os.Getenv(DATABASE_COLLECTION)
+
 	collection := ur.databaseConnection.Collection(collection_name)
 
 	userEntity := &entity.UserEntity{}

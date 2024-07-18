@@ -4,6 +4,8 @@ import (
 	"github.com/LuizEduardo-service/go_crud/src/controller"
 	"github.com/LuizEduardo-service/go_crud/src/model"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func InitRoutes(r *gin.RouterGroup, userController controller.UserControllerInterface) {
@@ -14,5 +16,7 @@ func InitRoutes(r *gin.RouterGroup, userController controller.UserControllerInte
 	r.PUT("/updateUser/:userId", userController.UpdateUser)
 	r.DELETE("/deleteUser/:userId", userController.DeleteUser)
 	r.POST("/login", userController.LoginUser)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 }

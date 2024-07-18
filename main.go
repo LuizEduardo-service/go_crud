@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	_ "github.com/LuizEduardo-service/go_crud/docs"
 	"github.com/LuizEduardo-service/go_crud/src/configuration/database/mongodb"
 	"github.com/LuizEduardo-service/go_crud/src/configuration/logger"
 	"github.com/LuizEduardo-service/go_crud/src/controller"
@@ -21,6 +22,13 @@ func initDependencies(database *mongo.Database) controller.UserControllerInterfa
 	return controller.NewControllerInterface(service)
 }
 
+// @title           Swagger Example API
+// @version         1.0
+// @description     This is a sample server celler server.
+// @host      localhost:8080
+// @BasePath  /api/v1
+// @schemes http
+// @license MIT
 func main() {
 	logger.Info("Iniciando o Sistema")
 
@@ -41,7 +49,7 @@ func main() {
 	router := gin.Default()
 	routes.InitRoutes(&router.RouterGroup, userController)
 
-	if err := router.Run(":8080"); err != nil {
+	if err := router.Run(":8081"); err != nil {
 		log.Fatal(err)
 	}
 
