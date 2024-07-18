@@ -19,7 +19,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param userLogin body request.UserLogin true "User login credentials"
-
+// @Success 200 {object} response.UserResponse "Login successful, authentication token provided"
 // @Header 200 {string} Authorization "Authentication token"
 // @Failure 403 {object} rest_err.RestErr "Error: Invalid login credentials"
 // @Router /login [post]

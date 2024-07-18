@@ -5,6 +5,7 @@ FROM golang:1.22 as BUILDER
 WORKDIR /app
 # COPIAR TODOS OS ARQUIVOS PARA A PASTA DOCKER ################
 COPY src src
+COPY docs docs
 COPY go.mod go.mod
 COPY go.sum go.sum
 COPY main.go main.go

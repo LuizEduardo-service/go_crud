@@ -20,7 +20,7 @@ import (
 // @Produce json
 // @Param userId path string true "ID of the user to be retrieved"
 // @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
-
+// @Success 200 {object} response.UserResponse "User information retrieved successfully"
 // @Failure 400 {object} rest_err.RestErr "Error: Invalid user ID"
 // @Failure 404 {object} rest_err.RestErr "User not found"
 // @Router /getUserById/{userId} [get]

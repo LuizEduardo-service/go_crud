@@ -40,6 +40,12 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.UserResponse"
+                        }
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -106,7 +112,41 @@ const docTemplate = `{
         },
         "/getUserById/{userId}": {
             "get": {
+                "description": "Retrieves user details based on the user ID provided as a parameter.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Find User by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the user to be retrieved",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003cAdd access token here\u003e",
+                        "description": "Insert your access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
+                    "200": {
+                        "description": "User information retrieved successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.UserResponse"
+                        }
+                    },
                     "400": {
                         "description": "Error: Invalid user ID",
                         "schema": {
@@ -124,7 +164,41 @@ const docTemplate = `{
         },
         "/login": {
             "post": {
+                "description": "Allows a user to log in and receive an authentication token.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User Login",
+                "parameters": [
+                    {
+                        "description": "User login credentials",
+                        "name": "userLogin",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserLogin"
+                        }
+                    }
+                ],
                 "responses": {
+                    "200": {
+                        "description": "Login successful, authentication token provided",
+                        "schema": {
+                            "$ref": "#/definitions/response.UserResponse"
+                        },
+                        "headers": {
+                            "Authorization": {
+                                "type": "string",
+                                "description": "Authentication token"
+                            }
+                        }
+                    },
                     "403": {
                         "description": "Error: Invalid login credentials",
                         "schema": {
@@ -194,6 +268,27 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "request.UserLogin": {
+            "description": "Structure containing the necessary fields for user login.",
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "description": "User's email (required and must be a valid email address).",
+                    "type": "string",
+                    "example": "test@test.com"
+                },
+                "password": {
+                    "description": "User's password (required, minimum of 6 characters, and must contain at least one of the characters: !@#$%*).",
+                    "type": "string",
+                    "minLength": 6,
+                    "example": "password#@#@!2121"
+                }
+            }
+        },
         "request.UserRequest": {
             "description": "Structure containing the required fields for creating a new user.",
             "type": "object",
@@ -250,6 +345,27 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 100,
                     "minLength": 4,
+                    "example": "John Doe"
+                }
+            }
+        },
+        "response.UserResponse": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "example": 30
+                },
+                "email": {
+                    "type": "string",
+                    "example": "test@test.com"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "82bdd399-321b-41d8-8b40-9a0116db9e92"
+                },
+                "name": {
+                    "type": "string",
                     "example": "John Doe"
                 }
             }

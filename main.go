@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	// _ "github.com/LuizEduardo-service/go_crud/docs"
+	_ "github.com/LuizEduardo-service/go_crud/docs"
 	"github.com/LuizEduardo-service/go_crud/src/configuration/database/mongodb"
 	"github.com/LuizEduardo-service/go_crud/src/configuration/logger"
 	"github.com/LuizEduardo-service/go_crud/src/controller"
