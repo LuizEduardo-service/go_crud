@@ -110,9 +110,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/getUserById/{userId}": {
+        "/getUserByEmail/{userEmail}": {
             "get": {
-                "description": "Retrieves user details based on the user ID provided as a parameter.",
+                "description": "Retrieves user details based on the email provided as a parameter.",
                 "consumes": [
                     "application/json"
                 ],
@@ -122,12 +122,12 @@ const docTemplate = `{
                 "tags": [
                     "Users"
                 ],
-                "summary": "Find User by ID",
+                "summary": "Find User by Email",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID of the user to be retrieved",
-                        "name": "userId",
+                        "description": "Email of the user to be retrieved",
+                        "name": "userEmail",
                         "in": "path",
                         "required": true
                     },
@@ -149,6 +149,58 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Error: Invalid user ID",
+                        "schema": {
+                            "$ref": "#/definitions/rest_err.RestErr"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/rest_err.RestErr"
+                        }
+                    }
+                }
+            }
+        },
+        "/getUserById/{userId}": {
+            "get": {
+                "description": "Retrieves user details based on the user Email provided as a parameter.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Find User by Email",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email of the user to be retrieved",
+                        "name": "userEmail",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "Bearer \u003cAdd access token here\u003e",
+                        "description": "Insert your access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User information retrieved successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Invalid user Email",
                         "schema": {
                             "$ref": "#/definitions/rest_err.RestErr"
                         }

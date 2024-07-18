@@ -202,15 +202,15 @@ paths:
       summary: Delete User
       tags:
       - Users
-  /getUserById/{userId}:
+  /getUserByEmail/{userEmail}:
     get:
       consumes:
       - application/json
-      description: Retrieves user details based on the user ID provided as a parameter.
+      description: Retrieves user details based on the email provided as a parameter.
       parameters:
-      - description: ID of the user to be retrieved
+      - description: Email of the user to be retrieved
         in: path
-        name: userId
+        name: userEmail
         required: true
         type: string
       - default: Bearer <Add access token here>
@@ -234,7 +234,42 @@ paths:
           description: User not found
           schema:
             $ref: '#/definitions/rest_err.RestErr'
-      summary: Find User by ID
+      summary: Find User by Email
+      tags:
+      - Users
+  /getUserById/{userId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves user details based on the user Email provided as a parameter.
+      parameters:
+      - description: Email of the user to be retrieved
+        in: path
+        name: userEmail
+        required: true
+        type: string
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User information retrieved successfully
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+        "400":
+          description: 'Error: Invalid user Email'
+          schema:
+            $ref: '#/definitions/rest_err.RestErr'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/rest_err.RestErr'
+      summary: Find User by Email
       tags:
       - Users
   /login:
