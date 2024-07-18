@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	_ "github.com/LuizEduardo-service/go_crud/docs"
+	// _ "github.com/LuizEduardo-service/go_crud/docs"
 	"github.com/LuizEduardo-service/go_crud/src/configuration/database/mongodb"
 	"github.com/LuizEduardo-service/go_crud/src/configuration/logger"
 	"github.com/LuizEduardo-service/go_crud/src/controller"
@@ -49,7 +49,7 @@ func main() {
 	router := gin.Default()
 	routes.InitRoutes(&router.RouterGroup, userController)
 
-	if err := router.Run(":8081"); err != nil {
+	if err := router.Run(":8080"); err != nil {
 		log.Fatal(err)
 	}
 
